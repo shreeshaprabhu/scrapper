@@ -36,11 +36,11 @@ def prepare():
     global dfa
     dfa = re.compile(pattern, re.DOTALL)
 
-    # data.json for storing processed data
-    with open('data.json', 'a') as f:
+    # data.min.json for storing processed data
+    with open('data.min.json', 'a') as f:
         pass
     global res_data
-    with open('data.json') as f:
+    with open('data.min.json') as f:
         read_data = f.read()
     if read_data:
         res_data = json.loads(read_data)
@@ -58,7 +58,7 @@ def prepare():
 # method to dump data into json files
 def finish():
     # indented json
-    with open('data.json', 'w') as f:
+    with open('data.pretty.json', 'w') as f:
         f.write(json.dumps(res_data, indent=4))
     # json
     with open('data.min.json', 'w') as f:
