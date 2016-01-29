@@ -138,22 +138,24 @@ def fetch_result(sem, sch_no):
 def main():
     prepare()
 
-    for tpl in sch_lim:
-        for sch_no in range(*tpl[1:]):
-            if sch_no in read_sch_no:
-                continue
-            # fetch_result(tpl[0], sch_no)
-            while threading.active_count() >= THREAD_LIMIT:
-                pass
-            threading.Thread(target=fetch_result, args=(tpl[0], sch_no), name='ResultFetcher').start()
-    while threading.active_count() > 1:
-        done = True
-        for thread in threading.enumerate():
-            if thread.name == 'ResultFetcher':
-                done = False
-        if done:
-            break
-    finish()
+    try:
+        for tpl in sch_lim:
+            for sch_no in range(*tpl[1:]):
+                if sch_no in read_sch_no:
+                    continue
+                # fetch_result(tpl[0], sch_no)
+                while threading.active_count() >= THREAD_LIMIT:
+                    pass
+                threading.Thread(target=fetch_result, args=(tpl[0], sch_no), name='ResultFetcher').start()
+        while threading.active_count() > 1:
+            done = True
+            for thread in threading.enumerate():
+                if thread.name == 'ResultFetcher':
+                    done = False
+            if done:
+                break
+    finally:
+        finish()
 
 if __name__ == '__main__':
     main()
