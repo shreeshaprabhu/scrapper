@@ -1,7 +1,8 @@
 # scrapper
 Result scrapper written python
+Downloads results from <a href="http://dolphintechnologies.in/manit/results.html">MANIT Result Portal</a>
 
-scrapper2.py downloads the result
-  * uses regex stored in pattern.txt
-  * processes extracted data using helper.py
-  * results are stored in JSON format in data.json and data.min.json
+<strong>scrapper2.py</strong> downloads the result
+  * uses regex stored in <strong>pattern.txt</strong>
+  * processes extracted data using <strong>helper.py</strong>
+  * results are stored in JSON format in <strong>data.json</strong> and <strong>data.min.json</strong>
