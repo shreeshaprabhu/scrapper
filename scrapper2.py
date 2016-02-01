@@ -7,20 +7,28 @@ import threading
 from helper import *
 
 # scholar number range and POST details
-''' sch_lim = [(5, 131114001, 131114168)] '''
 sch_lim = [
     (3, 141114001, 141114172),      # ECE 3
     (5, 131114001, 131114168),      # ECE 5
     (7, 121114001, 121114149),      # ECE 7
+    (1, 151119001, 151119065),      # MSME 1
     (3, 141119001, 141119078),      # MSME 3
     (5, 131119001, 131119071),      # MSME 5
     (3, 141117001, 141117093),      # CHEM 3
     (5, 131117001, 131117070),      # CHEM 5
     (7, 121116301, 121116365),      # CHEM 7
+    (1, 151113001, 151113126),      # EE 1
     (5, 131113001, 131113135),      # EE 5
     (7, 121113001, 121113115),      # EE 7
+    (1, 151116001, 151116111),      # ME 1 (I)
+    (1, 151116201, 151116301),      # ME 1 (II)
+    (3, 141116001, 141116102),      # ME 3 (I)
+    (3, 141116201, 141116297),      # ME 3 (II)
     (5, 131116001, 131116111),      # ME 5 (I)
     (5, 131116201, 131116303),      # ME 5 (II)
+    (7, 121116001, 121116197),      # ME 7
+    #(5, 131112001, 131112111),      # CSE 5 (I)
+    #(5, 131112201, 131112311),      # CSE 5 (II)
 ]
 url = 'http://dolphintechnologies.in/manit/accessview.php'
 
@@ -74,14 +82,21 @@ def fetch_result(sem, sch_no):
     data = {'scholar': str(sch_no), 'semester': str(sem), 'submit': 'Submit'}
     post = bytes(urllib.parse.urlencode(data), 'utf-8')
 
-    try:
-        html_doc = urllib.request.urlopen(url, post).read().decode()
-    except:
-        print('Failed to connect', sch_no)
-        return
+    cnt = 3
+    while cnt > 0:
+        try:
+            html_doc = urllib.request.urlopen(url, post).read().decode()
+        except Exception as ex:
+            print(ex, sch_no)
+            cnt -= 1
+            continue
+        else:
+            reg_match = dfa.match(html_doc)
+            if not reg_match:
+                return
+            break
 
-    reg_match = dfa.match(html_doc)
-    if not reg_match:
+    if cnt <= 0:
         return
 
     rg = reg_match.group
