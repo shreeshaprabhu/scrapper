@@ -8,12 +8,15 @@ from helper import *
 
 # scholar number range and POST details
 sch_lim = [
+    (1, 151114001, 151114164),      # ECE 1
     (3, 141114001, 141114172),      # ECE 3
     (5, 131114001, 131114168),      # ECE 5
     (7, 121114001, 121114149),      # ECE 7
     (1, 151119001, 151119065),      # MSME 1
     (3, 141119001, 141119078),      # MSME 3
     (5, 131119001, 131119071),      # MSME 5
+    (7, 121101101, 121101163),		# MSME 7
+    (1, 151117001, 151117074),      # CHEM 1
     (3, 141117001, 141117093),      # CHEM 3
     (5, 131117001, 131117070),      # CHEM 5
     (7, 121116301, 121116365),      # CHEM 7
@@ -27,8 +30,11 @@ sch_lim = [
     (5, 131116001, 131116111),      # ME 5 (I)
     (5, 131116201, 131116303),      # ME 5 (II)
     (7, 121116001, 121116197),      # ME 7
+    (1, 151112001, 151112111),      # CSE 1 (I)
+    (1, 151112201, 151112311),      # CSE 1 (II)
     #(5, 131112001, 131112111),      # CSE 5 (I)
     #(5, 131112201, 131112311),      # CSE 5 (II)
+    (1, 151111001, 151111127),      # CE 1
 ]
 url = 'http://dolphintechnologies.in/manit/accessview.php'
 
@@ -65,6 +71,8 @@ def prepare():
 
 # method to dump data into json files
 def finish():
+    res_data.sort(key=lambda r: r['course'] + r['branch'] + r['semester'])
+
     # indented json
     with open('data.pretty.json', 'w') as f:
         f.write(json.dumps(res_data, indent=4))
