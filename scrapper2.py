@@ -71,7 +71,7 @@ def prepare():
 
 # method to dump data into json files
 def finish():
-    res_data.sort(key=lambda r: r['course'] + r['branch'] + r['semester'])
+    res_data.sort(key=lambda r: (r['course'], r['branch'], r['semester'], r['sch_no']))
 
     # indented json
     with open('data.pretty.json', 'w') as f:
